@@ -100,14 +100,6 @@ function TodoInput() {
     };
 
     const onClickDelete = (event: React.MouseEvent, text: string) => {
-        // const arr = [];
-        // for (let i = 0; i < items.length; i++) {
-        //     if (i !== 1) {
-        //         arr.push(items[i]);
-        //     }
-        // }
-        // setItems(arr);
-
         setItems(items.filter((item) => item.text !== text));
         setOpen(true);
     };
@@ -124,16 +116,6 @@ function TodoInput() {
         setSearchText(text);
     };
 
-    /*
-    const onClickTest2 = () => {
-        const arr = items.filter((item, idx) => idx !== 1);
-        setItems(arr);
-    };
-
-    const onClickTest3 = () => {
-        setItems(items.filter((item, idx) => idx !== 1));
-    };
-*/
     return (
         <Box className={classes.root} component="div">
             <TodoItemSearchInput onSearch={onSearch} />

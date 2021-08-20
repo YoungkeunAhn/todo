@@ -28,17 +28,13 @@ function TodoItemSearchInput(props: Props) {
     const { onSearch } = props;
     const classes = useStyles();
     const [searchText, setSearchText] = useState("");
-    const [searchItem, setSearchItem] = useState<TodoItems[]>([{ id: "", text: "", deleted: false }]);
 
     const onChangeSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
-        //setItems
     };
 
     const onClickSearchIcon = () => {
-        // console.log(items);
         // setSearchItem(items.filter((item) => item.text.includes(searchText)));
-        // console.log(searchItem);
         // setSearchText("");
         onSearch(searchText);
     };
@@ -64,17 +60,6 @@ function TodoItemSearchInput(props: Props) {
                     <SearchIcon />
                 </IconButton>
             </div>
-            {/* <Paper component="div" variant="elevation" elevation={10}>
-                {searchItem.length !== 0 ? (
-                    <div>
-                        {searchItem.map((item) => (
-                            <div className={classes.searchResult}>{item.text}</div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className={classes.searchResult}>검색결과가 없습니다.</div>
-                )}
-            </Paper> */}
         </div>
     );
 }
