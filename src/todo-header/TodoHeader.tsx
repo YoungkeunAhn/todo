@@ -1,40 +1,18 @@
-import { Box, Button, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import React from "react";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            background: theme.palette.text.primary,
-            color: "white",
-            padding: theme.spacing(5),
-        },
-        nav: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            "& * ": {
-                margin: theme.spacing("auto", 1),
-            },
-            "& .MuiButton-text": {
-                color: "white",
-            },
-        },
-    })
-);
+import { useStyles } from "./style";
 
 function TodoHeader() {
     const classes = useStyles();
 
     return (
         <Box className={classes.root}>
-            <Typography variant="h4" align="center" gutterBottom>
-                TodoList
+            <Typography variant="h4" component="span" className={classes.title}>
+                T O D O
             </Typography>
-            <div className={classes.nav}>
-                <Button>Home</Button>
-                <span>|</span>
-                <Button>About</Button>
-            </div>
+            <Typography variant="subtitle2" component="span" className={classes.margin}>
+                {new Date().toLocaleDateString("kr-ko", { weekday: "long", year: "numeric", month: "short", day: "numeric" })}
+            </Typography>
         </Box>
     );
 }
