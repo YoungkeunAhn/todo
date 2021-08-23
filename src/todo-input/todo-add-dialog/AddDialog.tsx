@@ -1,4 +1,4 @@
-import { Box, Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Slide, TextField, Theme } from "@material-ui/core";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide, TextField } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions/transition";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useState } from "react";
@@ -49,12 +49,10 @@ function AddDialog(props: Props) {
 
     return (
         <Box component="div" className={classes.root}>
-            {/* 플러스 버튼 */}
             <Button className={classes.addButton} variant="contained" color="primary" onClick={clickAddButton}>
                 <AddIcon />
             </Button>
 
-            {/* 다이얼로그 */}
             <Dialog className={classes.dialogBox} open={open} TransitionComponent={Transition} keepMounted onClose={onClose}>
                 <DialogTitle>Todo 추가</DialogTitle>
                 <DialogContent>
