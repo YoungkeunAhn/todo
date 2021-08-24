@@ -1,8 +1,10 @@
 import { Box, Container, createStyles, makeStyles, Theme, ThemeProvider } from "@material-ui/core";
 import React from "react";
+
 import theme from "./theme";
 import TodoHeader from "./todo-header/TodoHeader";
 import TodoWrapper from "./todo-input/TodoWrapper";
+import Users from "./Users";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,9 +33,11 @@ function App() {
         <ThemeProvider theme={theme}>
             <Box className={classes.root}>
                 <div className={classes.bgImg}></div>
+
                 <Container maxWidth="sm" className={classes.position}>
                     <TodoHeader />
                     <TodoWrapper />
+                    <Users />
                 </Container>
             </Box>
         </ThemeProvider>
