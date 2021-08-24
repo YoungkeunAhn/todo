@@ -1,32 +1,38 @@
 import { FormControl, InputAdornment, OutlinedInput } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import React, { useState } from "react";
+import React from "react";
 import { useStyles } from "./style";
 
 type Props = {
     //items: TodoItems[];
     onSearch: (searchText: string) => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onReset: () => void;
+    text: string;
 };
 
-function TodoItemSearchInput(props: Props) {
-    const { onSearch } = props;
+// axios 를 이용해서  서버로부터 json파일을 다운로드하여
+// const date = Date.now()
+//const time = new Date().getTime()
+// const timestamp = date / 1000 // ==> 12312312.1231
+
+function TodoSearchBox(props: Props) {
+    const { onSearch, onChange, onReset, text } = props;
     const classes = useStyles();
-    const [searchText, setSearchText] = useState("");
 
-    const onChangeSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(event.target.value);
+    const onKeyDownEnter = (event: React.KeyboardEvent, text: string) => {
+        if (event.key === "Enter") {
+            onSearch(text);
+            onReset();
+        }
     };
-
-    // const onClickSearchIcon = () => {
-    //     onSearch(searchText);
-    //     setSearchText("");
-    // };
 
     return (
         <div className={classes.root}>
             <div>
                 <FormControl variant="outlined" className={classes.searchWrap}>
                     <OutlinedInput
+                        name="searchInput"
                         placeholder="Search todo..."
                         fullWidth
                         startAdornment={
@@ -34,14 +40,9 @@ function TodoItemSearchInput(props: Props) {
                                 <SearchIcon />
                             </InputAdornment>
                         }
-                        value={searchText}
-                        onChange={onChangeSearchText}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                onSearch(searchText);
-                                setSearchText("");
-                            }
-                        }}
+                        value={text}
+                        onChange={onChange}
+                        onKeyDown={(e) => onKeyDownEnter(e, text)}
                     />
                 </FormControl>
             </div>
@@ -49,4 +50,4 @@ function TodoItemSearchInput(props: Props) {
     );
 }
 
-export default TodoItemSearchInput;
+export default TodoSearchBox;

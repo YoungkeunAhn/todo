@@ -1,33 +1,23 @@
 export type TodoItems = {
-    id: string;
-    text: string;
-    deleted: boolean;
-    madeDate: string;
+    content: string;
+    timestamp: string;
 };
 
 export const DEFAULT_TODO_ITEMS = [
     {
-        id: "todo1",
-        text: "Todo List 화면 만들기",
-        deleted: false,
-        madeDate: "2021. 8. 20.",
+        content: "Todo List 화면 만들기",
+        timestamp: "1629784430.114",
     },
     {
-        id: "todo2",
-        text: "Todo List Item 넘기기",
-        deleted: false,
-        madeDate: "2021. 8. 21.",
+        content: "Todo List Item 넘기기",
+        timestamp: "1629784331.114",
     },
     {
-        id: "todo3",
-        text: "Todo List Item 뿌리기",
-        deleted: false,
-        madeDate: "2021. 8. 22.",
+        content: "Todo List Item 뿌리기",
+        timestamp: "1629784331.123",
     },
     {
-        id: "todo4",
-        text: "Todo List Item 삭제확인",
-        deleted: true,
-        madeDate: "2021. 8. 23.",
+        content: "Todo List Item 삭제확인",
+        timestamp: "1629784831.111.",
     },
 ];

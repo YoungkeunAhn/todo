@@ -5,6 +5,13 @@ import React, { useState } from "react";
 import { TodoItems } from "../../TodoDefaultData";
 import { useStlyes } from "./style";
 
+type Props = {
+    setItems: React.Dispatch<React.SetStateAction<TodoItems[]>>;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onReset: () => void;
+    text: string;
+};
+//다이얼로그 슬라이드
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement<any, any> },
     ref: React.Ref<unknown>
@@ -12,71 +19,65 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type Props = {
-    setItems: React.Dispatch<React.SetStateAction<TodoItems[]>>;
-};
-
-function AddDialog(props: Props) {
+function TodoDialogBox(props: Props) {
     const classes = useStlyes();
-    const setItems = props.setItems;
+    const { setItems, onReset, onChange, text } = props;
     const [open, setOpen] = useState(false);
-    const [dialogText, setDialogText] = useState("");
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDialogText(event.target.value);
-    };
-
-    const onClose = () => {
+    //다이얼로그 함수
+    const onCloseDialog = () => {
         setOpen(false);
-        setDialogText("");
+        onReset();
     };
-
-    const clickAddButton = () => {
+    const onOpenDialog = () => {
         setOpen(true);
     };
-    const onCreateTodoItem = () => {
+
+    //todo 생성
+    const onCreate = () => {
         const newItem = [
             {
-                id: `${new Date()}`,
-                text: dialogText,
-                deleted: false,
-                madeDate: `${new Date().toLocaleDateString("kr-ko", { year: "2-digit", month: "2-digit", day: "2-digit" })}`,
+                content: text,
+                timestamp: `${new Date().getTime() / 1000}`,
             },
         ];
         setItems((prev) => prev.concat(newItem));
-        setDialogText("");
+        onReset();
+    };
+
+    //이벤트 호출 함수
+    const onClickAddBtn = () => {
+        onCreate();
     };
 
     return (
         <Box component="div" className={classes.root}>
-            <Button className={classes.addButton} variant="contained" color="primary" onClick={clickAddButton}>
+            <Button className={classes.addButton} variant="contained" color="primary" onClick={onOpenDialog}>
                 <AddIcon />
             </Button>
 
-            <Dialog className={classes.dialogBox} open={open} TransitionComponent={Transition} keepMounted onClose={onClose}>
+            <Dialog className={classes.dialogBox} open={open} TransitionComponent={Transition} keepMounted onClose={onCloseDialog}>
                 <DialogTitle>Todo 추가</DialogTitle>
                 <DialogContent>
                     <TextField
-                        focused
-                        value={dialogText}
+                        name="dialogAddInput"
+                        value={text}
                         onChange={onChange}
                         fullWidth
+                        focused
                         label="Input todo"
                         color="primary"
                         placeholder="Input todo text..."
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                onCreateTodoItem();
-                                setOpen(true);
-                            }
+                        onKeyDown={() => {
+                            onCreate();
                         }}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" onClick={onCreateTodoItem}>
+                    <Button color="primary" onClick={onClickAddBtn}>
                         추가
                     </Button>
-                    <Button color="secondary" onClick={onClose}>
+                    <Button color="secondary" onClick={onCloseDialog}>
                         닫기
                     </Button>
                 </DialogActions>
@@ -85,4 +86,4 @@ function AddDialog(props: Props) {
     );
 }
 
-export default AddDialog;
+export default TodoDialogBox;

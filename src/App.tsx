@@ -2,7 +2,7 @@ import { Box, Container, createStyles, makeStyles, Theme, ThemeProvider } from "
 import React from "react";
 import theme from "./theme";
 import TodoHeader from "./todo-header/TodoHeader";
-import TodoInput from "./todo-input/TodoInput";
+import TodoWrapper from "./todo-input/TodoWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,7 +33,7 @@ function App() {
                 <div className={classes.bgImg}></div>
                 <Container maxWidth="sm" className={classes.position}>
                     <TodoHeader />
-                    <TodoInput />
+                    <TodoWrapper />
                 </Container>
             </Box>
         </ThemeProvider>

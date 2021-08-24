@@ -11,30 +11,34 @@ type Props = {
 };
 
 function TodoListBox(props: Props) {
-    const items = props.items;
-    const setItems = props.setItems;
-    const searchText = props.searchText;
+    const { items, setItems, searchText } = props;
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     //Todo 삭제
-    const onClickDelete = (event: React.MouseEvent, text: string) => {
-        setItems(items.filter((item) => item.text !== text));
+    const onDelete = (event: React.MouseEvent, text: string) => {
+        setItems(items.filter((item) => item.content !== text));
         setOpen(true);
     };
-
-    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    //snackBar 닫기
+    const snackClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === "clickaway") {
             return;
         }
         setOpen(false);
     };
+
+    //이벤트 호출 함수
+    const onClickDeleteBtn = (event: React.MouseEvent, text: string) => {
+        onDelete(event, text);
+    };
+
     return (
         <div className={classes.root}>
             {items
                 .filter((it) => {
                     if (searchText && searchText.length > 0) {
-                        return it.text.indexOf(searchText) >= 0;
+                        return it.content.indexOf(searchText) >= 0;
                     } else {
                         return it;
                     }
@@ -43,21 +47,21 @@ function TodoListBox(props: Props) {
                     return (
                         <div className={classes.todoItem}>
                             <div className={classes.itemContent}>
-                                <div>{item.text}</div>
-                                <div className={classes.itemDate}>{item.madeDate}</div>
+                                <div>{item.content}</div>
+                                <div className={classes.itemDate}>{item.timestamp}</div>
                             </div>
 
                             <Button
                                 className={classes.deleteButton}
                                 onClick={(e) => {
-                                    onClickDelete(e, item.text);
+                                    onClickDeleteBtn(e, item.content);
                                 }}
                             >
                                 delete
                             </Button>
-                            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                                <Alert onClose={handleClose} severity="success">
-                                    <span className={classes.highlight}>"{item.text}"</span> 아이템이 삭제되었습니다.
+                            <Snackbar open={open} autoHideDuration={1000} onClose={snackClose}>
+                                <Alert onClose={snackClose} severity="success">
+                                    <span className={classes.highlight}>"{item.content}"</span> 아이템이 삭제되었습니다.
                                 </Alert>
                             </Snackbar>
                         </div>
