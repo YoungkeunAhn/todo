@@ -1,31 +1,10 @@
-import { Box, Container, createStyles, makeStyles, Theme, ThemeProvider } from "@material-ui/core";
+import { Box, Container, ThemeProvider } from "@material-ui/core";
 import React from "react";
-
+import { useStyles } from "./style";
 import theme from "./theme";
 import TodoHeader from "./todo-header/TodoHeader";
 import TodoWrapper from "./todo-input/TodoWrapper";
-import Users from "./Users";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            background: "#211e20",
-            height: "100vh",
-            boxSizing: "border-box",
-        },
-        bgImg: {
-            width: "100vw",
-            height: "30vh",
-            backgroundImage: `url('https://www.shutterstock.com/ko/blog/wp-content/uploads/sites/17/2020/10/background-ideas-20.jpg')`,
-            backgroundRepeat: "repeat-x",
-            opacity: 0.5,
-        },
-        position: {
-            position: "relative",
-            top: "-20vh",
-        },
-    })
-);
+import Todos from "./Todos";
 
 function App() {
     const classes = useStyles();
@@ -37,7 +16,7 @@ function App() {
                 <Container maxWidth="sm" className={classes.position}>
                     <TodoHeader />
                     <TodoWrapper />
-                    <Users />
+                    {/* <Todos / */}
                 </Container>
             </Box>
         </ThemeProvider>

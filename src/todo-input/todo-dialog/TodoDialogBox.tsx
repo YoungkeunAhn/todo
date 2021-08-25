@@ -1,6 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide, TextField } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions/transition";
 import AddIcon from "@material-ui/icons/Add";
+import axios from "axios";
 import React, { useState } from "react";
 import { TodoItems } from "../../TodoDefaultData";
 import { useStlyes } from "./style";
@@ -35,19 +36,28 @@ function TodoDialogBox(props: Props) {
 
     //todo 생성
     const onCreate = () => {
-        const newItem = [
-            {
-                content: text,
-                timestamp: `${new Date().getTime() / 1000}`,
-            },
-        ];
-        setItems((prev) => prev.concat(newItem));
+        const newItem = {
+            id: `${new Date().getTime() / 1000}`,
+            content: text,
+            timestamp: `${new Date().getTime() / 1000}`,
+        };
+        if (newItem.content !== "") {
+            axios.post("http://localhost:3001/todos", newItem);
+            setItems((prev) => prev.concat(newItem));
+        }
+
         onReset();
     };
 
     //이벤트 호출 함수
     const onClickAddBtn = () => {
         onCreate();
+    };
+
+    const onKeyDownEnter = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter") {
+            onCreate();
+        }
     };
 
     return (
@@ -64,12 +74,13 @@ function TodoDialogBox(props: Props) {
                         value={text}
                         onChange={onChange}
                         fullWidth
+                        required
                         focused
                         label="Input todo"
                         color="primary"
                         placeholder="Input todo text..."
-                        onKeyDown={() => {
-                            onCreate();
+                        onKeyDown={(e) => {
+                            onKeyDownEnter(e);
                         }}
                     />
                 </DialogContent>

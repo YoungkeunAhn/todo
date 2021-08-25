@@ -7,7 +7,7 @@ import TodoSearchBox from "./todo-search/TodoSearchBox";
 import TodoAddBox from "./todo-add/TodoAddBox";
 
 function TodoWrapper() {
-    const [items, setItems] = useState<TodoItems[]>(DEFAULT_TODO_ITEMS);
+    const [items, setItems] = useState<TodoItems[]>([]);
     const [searchText, setSearchText] = useState<string>("");
     const [inputs, setInputs] = useState({
         searchInput: "",

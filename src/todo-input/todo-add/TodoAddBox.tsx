@@ -1,4 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
+import axios from "axios";
 import React, { useState } from "react";
 import { TodoItems } from "../../TodoDefaultData";
 import { useStyles } from "./style";
@@ -16,11 +17,13 @@ function TodoAddBox(props: Props) {
 
     const onCreate = () => {
         const newItem = {
+            id: `${new Date().getTime() / 1000}`,
             content: text,
             timestamp: `${new Date().getTime() / 1000}`,
         };
 
         setItems((prev) => prev.concat([newItem]));
+        axios.post("http://localhost:3001/todos", newItem);
         onReset();
     };
 

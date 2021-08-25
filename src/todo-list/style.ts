@@ -39,5 +39,9 @@ export const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.secondary.light,
             letterSpacing: -1,
         },
+        editButton: {
+            color: theme.palette.primary.dark,
+            letterSpacing: -1,
+        },
     })
 );
