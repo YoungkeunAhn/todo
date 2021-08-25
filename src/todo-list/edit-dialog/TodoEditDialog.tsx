@@ -1,17 +1,18 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TodoItems } from "../../TodoDefaultData";
 import { useStyles } from "./style";
 
 type Props = {
     item: TodoItems;
+    setReflesh: any;
     // getTodoData: Promise<JSX.Element | undefined>;
 };
 
 function TodoEditDialog(props: Props) {
     const classes = useStyles();
-    const { item } = props;
+    const { item, setReflesh } = props;
     const [open, setOpen] = React.useState(false);
     const [editText, setEditText] = useState<string>(item.content);
 
@@ -27,10 +28,14 @@ function TodoEditDialog(props: Props) {
         editDialogOpen();
     };
     const onClickUpdateBtn = () => {
-        axios.put(`http://localhost:3001/todos/${item.id}`, {
-            content: editText,
-            timestamp: item.timestamp,
-        });
+        axios
+            .put(`http://localhost:3001/todos/${item.id}`, {
+                content: editText,
+                timestamp: item.timestamp,
+            })
+            .then((res) => {
+                setReflesh(res);
+            });
 
         editDialogClose();
     };

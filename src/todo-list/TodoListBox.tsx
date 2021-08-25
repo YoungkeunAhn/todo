@@ -25,6 +25,7 @@ function TodoListBox(props: Props) {
     const [open, setOpen] = React.useState(false);
     const [error, setError] = useState<Error>();
     const [loading, setLoading] = useState(false);
+    const [reflesh, setReflesh] = useState(false);
 
     //json 객체 가져오기 - 비동기
     const getTodoData = async () => {
@@ -44,7 +45,7 @@ function TodoListBox(props: Props) {
 
     useEffect(() => {
         getTodoData();
-    }, []);
+    }, [reflesh]);
 
     //Todo 삭제
     const onDelete = (event: React.MouseEvent, id: string) => {
@@ -84,7 +85,7 @@ function TodoListBox(props: Props) {
                                 <div>{item.content}</div>
                                 <div className={classes.itemDate}>{item.timestamp}</div>
                             </div>
-                            <TodoEditDialog item={item} />
+                            <TodoEditDialog item={item} setReflesh={setReflesh} />
                             <Button
                                 className={classes.deleteButton}
                                 onClick={(e) => {
